@@ -1,10 +1,13 @@
 package com.example.springbootwebprojectboard.controller;
 
-import com.example.springbootwebprojectboard.entity.Board;
+import com.example.springbootwebprojectboard.dto.BoardDto;
 import com.example.springbootwebprojectboard.service.BoardService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -14,11 +17,17 @@ public class BoardController {
 
     private final BoardService boardService;
 
-    @GetMapping("/")
-    public String createBoard(Board board) {
+    @PostMapping("/create")
+    public ResponseEntity<BoardDto> create(@RequestBody BoardDto boardDto) {
 
-        boardService.create(board);
+        log.info("boardDto: {}", boardDto);
 
-        return "hello";
+        BoardDto newBoardDto = boardService.create(boardDto);
+
+        return new ResponseEntity<>(newBoardDto, HttpStatus.CREATED);
+
+        /*
+        return new ResponseEntity<>(boardService.create(boardDto), HttpStatus.CREATED);
+         */
     }
 }

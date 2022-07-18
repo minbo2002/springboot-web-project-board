@@ -1,8 +1,9 @@
 package com.example.springbootwebprojectboard.service;
 
-import com.example.springbootwebprojectboard.entity.Board;
+import com.example.springbootwebprojectboard.dto.BoardDto;
 
 public interface BoardService{
 
-    void create(Board board);
+    BoardDto create(BoardDto boardDto);
+
 }

@@ -5,11 +5,13 @@ import com.example.springbootwebprojectboard.entity.Board;
 import com.example.springbootwebprojectboard.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +20,7 @@ public class BoardServiceImpl implements BoardService{
 
     private final BoardRepository boardRepository;
 
+    @Transactional
     @Override
     public BoardDto create(BoardDto boardDto) {
 
@@ -33,6 +36,7 @@ public class BoardServiceImpl implements BoardService{
         */
     }
 
+    @Transactional(readOnly = true)
     @Override
     public List<BoardDto> getAll() {
 
@@ -42,6 +46,17 @@ public class BoardServiceImpl implements BoardService{
                 .map(s -> mapToDto(s))
                 .collect(Collectors.toList());
     }
+
+    @Transactional(readOnly = true)
+    @Override
+    public BoardDto getById(Long id) {
+
+        Board board = boardRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        return mapToDto(board);
+    }
+
 
     private Board mapToEntity(BoardDto boardDto) {
 

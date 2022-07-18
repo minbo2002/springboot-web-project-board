@@ -9,4 +9,6 @@ public interface BoardService{
     BoardDto create(BoardDto boardDto);
 
     List<BoardDto> getAll();
+
+    BoardDto getById(Long id);
 }

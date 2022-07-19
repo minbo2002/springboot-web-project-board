@@ -42,4 +42,20 @@ public class BoardController {
 
         return ResponseEntity.ok(boardService.getById(id));
     }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity<?> update(@RequestBody BoardDto boardDto, @PathVariable Long id) {
+
+        log.info("boardDto: {}, id: {}", boardDto, id);
+
+        return ResponseEntity.ok(boardService.update(boardDto, id));
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+
+        boardService.deleteById(id);
+
+        return ResponseEntity.ok("삭제가 완료되었습니다");
+    }
 }

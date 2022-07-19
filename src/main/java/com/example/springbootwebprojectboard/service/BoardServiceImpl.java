@@ -57,6 +57,39 @@ public class BoardServiceImpl implements BoardService{
         return mapToDto(board);
     }
 
+    @Transactional
+    @Override
+    public BoardDto update(BoardDto boardDto, Long id) {
+
+        Board oldBoard = boardRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        log.info("oldBoard: {}", oldBoard);
+
+        Board newBoard = Board.builder()
+                .id(oldBoard.getId())
+                .title(boardDto.getTitle())
+                .content(boardDto.getContent())
+                .build();
+
+        log.info("new Board: {}", newBoard);
+
+        Board updateBoard = boardRepository.save(newBoard);
+
+        log.info("updateBoard: {}", updateBoard);
+
+        return mapToDto(updateBoard);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+
+        Board board = boardRepository.findById(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        boardRepository.delete(board);
+    }
+
 
     private Board mapToEntity(BoardDto boardDto) {
 

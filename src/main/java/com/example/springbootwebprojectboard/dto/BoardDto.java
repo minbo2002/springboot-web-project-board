@@ -15,6 +15,7 @@ public class BoardDto {
 
     @Builder
     public BoardDto(String title, String content) {
+
         this.title = title;
         this.content = content;
     }

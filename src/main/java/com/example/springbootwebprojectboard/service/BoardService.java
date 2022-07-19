@@ -1,7 +1,6 @@
 package com.example.springbootwebprojectboard.service;
 
 import com.example.springbootwebprojectboard.dto.BoardDto;
-
 import java.util.List;
 
 public interface BoardService{
@@ -11,4 +10,8 @@ public interface BoardService{
     List<BoardDto> getAll();
 
     BoardDto getById(Long id);
+
+    BoardDto update(BoardDto boardDto, Long id);
+
+    void deleteById(Long id);
 }

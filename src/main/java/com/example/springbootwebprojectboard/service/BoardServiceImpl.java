@@ -2,6 +2,7 @@ package com.example.springbootwebprojectboard.service;
 
 import com.example.springbootwebprojectboard.dto.BoardDto;
 import com.example.springbootwebprojectboard.entity.Board;
+import com.example.springbootwebprojectboard.mapper.BoardMapper;
 import com.example.springbootwebprojectboard.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,6 +20,7 @@ import java.util.stream.Collectors;
 public class BoardServiceImpl implements BoardService{
 
     private final BoardRepository boardRepository;
+    private final BoardMapper boardMapper;
 
     @Transactional
     @Override
@@ -88,6 +90,13 @@ public class BoardServiceImpl implements BoardService{
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
         boardRepository.delete(board);
+    }
+
+    // Mybatis 방식 전체조회
+    @Override
+    public List<Board> selectList(BoardDto parameter) {
+
+        return boardMapper.select(parameter);
     }
 
 

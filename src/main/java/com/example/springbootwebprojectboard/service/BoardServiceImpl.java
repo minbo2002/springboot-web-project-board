@@ -83,6 +83,7 @@ public class BoardServiceImpl implements BoardService{
         return mapToDto(updateBoard);
     }
 
+    @Transactional
     @Override
     public void deleteById(Long id) {
 

@@ -24,11 +24,13 @@ class BoardRepositoryTest {
     void setup() {
 
         board1 = Board.builder()
+                .id(1L)
                 .title("title_1")
                 .content("content_1")
                 .build();
 
         board2 = Board.builder()
+                .id(2L)
                 .title("title_2")
                 .content("content_2")
                 .build();
@@ -67,6 +69,7 @@ class BoardRepositoryTest {
 
         // then
         assertThat(updateBoard.getTitle()).isEqualTo("update_title");
+        assertThat(updateBoard.getContent()).isEqualTo("update_content");
     }
 
     @Test

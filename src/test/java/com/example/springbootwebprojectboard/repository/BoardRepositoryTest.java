@@ -6,6 +6,8 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.test.annotation.Commit;
+import org.springframework.test.annotation.Rollback;
 
 import java.util.Optional;
 
@@ -18,7 +20,7 @@ class BoardRepositoryTest {
     @Autowired
     private BoardRepository boardRepository;
 
-    private Board board1, board2;
+    private Board board1;
 
     @BeforeEach
     void setup() {
@@ -29,14 +31,11 @@ class BoardRepositoryTest {
                 .content("content_1")
                 .build();
 
-        board2 = Board.builder()
-                .id(2L)
-                .title("title_2")
-                .content("content_2")
-                .build();
     }
 
     @Test
+    @Rollback(value = false)
+    @Commit
     void create() {
         // given
         Board saveBoard = boardRepository.save(board1);
